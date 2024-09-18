@@ -25,14 +25,44 @@ def get_json():
     res = make_response(jsonify(movies), 200)
     return res
 
-@app.route("/movies/<movieid>", methods=['GET'])
-def get_movie_byid(movieid):
+def get_movie(movieid):
     for movie in movies:
         if str(movie["id"]) == str(movieid):
-            res = make_response(jsonify(movie),200)
-            return res
-    return make_response(jsonify({"error":"Movie ID not found"}),400)
+            return movie
+    return None
 
+@app.route("/movies/<movieid>", methods=['GET'])
+def get_movie_byid(movieid):
+    movie = get_movie(movieid)
+    if movie:
+        return make_response(jsonify(movie),200)
+    else:
+        return make_response(jsonify({"error":"Movie ID not found"}),400)
+
+@app.route("/movies/<movieid>/rating", methods=['GET'])
+def get_movie_rating(movieid):
+    movie = get_movie(movieid)
+    if movie:
+        return make_response(str(movie["rating"]),200)
+    else:
+        return make_response(jsonify({"error":"Movie ID not found"}),400)
+    
+@app.route("/movies/<movieid>/title", methods=['GET'])
+def get_movie_title(movieid):
+    movie = get_movie(movieid)
+    if movie:
+        return make_response(movie["title"],200)
+    else:
+        return make_response(jsonify({"error":"Movie ID not found"}),400)
+    
+@app.route("/movies/<movieid>/director", methods=['GET'])
+def get_movie_director(movieid):
+    movie = get_movie(movieid)
+    if movie:
+        return make_response(movie["director"],200)
+    else:
+        return make_response(jsonify({"error":"Movie ID not found"}),400)
+    
 @app.route("/moviesbytitle", methods=['GET'])
 def get_movie_bytitle():
     json = ""
