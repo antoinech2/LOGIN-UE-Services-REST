@@ -82,7 +82,7 @@ def get_movie_bytitle():
     return res
 
 # Add movie
-@app.route("/addmovie/<movieid>", methods=['POST'])
+@app.route("/movies/<movieid>", methods=['POST'])
 def add_movie(movieid):
     req = request.get_json()
 
