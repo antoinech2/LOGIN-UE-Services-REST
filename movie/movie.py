@@ -116,6 +116,22 @@ def del_movie(movieid):
     res = make_response(jsonify({"error":"movie ID not found"}),400)
     return res
 
+@app.route("/help", methods=['GET'])
+def help():
+    return make_response(jsonify({"GET /":"root message",
+                                  "GET /template":"template message",
+                                  "GET /json":"get all movies",
+                                  "GET /movies/<movieid>":"get movie by movieid",
+                                  "GET /movies/<movieid>/rating":"get movie rating by movieid",
+                                  "GET /movies/<movieid>/title":"get movie title by movieid",
+                                  "GET /movies/<movieid>/director":"get movie director by movieid",
+                                  "GET /moviesbytitle":"get movie by title",
+                                  "POST /addmovie/<movieid>":"add movie",
+                                  "PUT /movies/<movieid>/<rate>":"update movie rating",
+                                  "DELETE /movies/<movieid>":"delete movie",
+                                  "GET /help":"get help message"
+                                 }), 200)
+
 if __name__ == "__main__":
     #p = sys.argv[1]
     print("Server running in port %s"%(PORT))
