@@ -34,6 +34,38 @@ paths:
               schema:
                 type: string
                 example: <h1 style='color:blue'>Welcome to the Movie service!</h1>
+  /template:
+    get:
+      tags:
+      - developers
+      summary: Template example
+      description: |
+        Display a template example
+      operationId: template
+      responses:
+        "200":
+          description: template example
+          content:
+            text/html:
+              schema:
+                type: string
+                example: <h1>This is my HTML template for Movie service</h1>
+  /help:
+    get:
+      tags:
+      - developers
+      summary: Help page of the service
+      description: |
+        List of all endpoints
+      operationId: help
+      responses:
+        "200":
+          description: Help page
+          content:
+            text/html:
+              schema:
+                type: string
+                example: GET / - Homescreen
   /json:
     get:
       tags:
@@ -122,6 +154,78 @@ paths:
           description: item deleted
         "400":
           description: ID not found
+  /movies/{movieid}/rating:
+    get:
+      tags:
+      - developers
+      summary: get the rating of a movie by its id
+      description: By passing in the appropriate options, you can get the rating of a Movie
+      operationId: get_rating_movie_byid
+      parameters:
+      - name: movieid
+        in: path
+        description: Movie ID.
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Movie rating
+          content:
+            text/html:
+              schema:
+                type: number
+                example: 3.4
+        "400":
+          description: bad input parameter
+  /movies/{movieid}/title:
+    get:
+      tags:
+      - developers
+      summary: get the title of a movie by its id
+      description: By passing in the appropriate options, you can get the title of a Movie
+      operationId: get_title_movie_byid
+      parameters:
+      - name: movieid
+        in: path
+        description: Movie ID.
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Movie title
+          content:
+            text/html:
+              schema:
+                type: string
+                example: The Martian
+        "400":
+          description: bad input parameter
+  /movies/{movieid}/director:
+    get:
+      tags:
+      - developers
+      summary: get the director of a movie by its id
+      description: By passing in the appropriate options, you can get the director of a Movie
+      operationId: get_director_movie_byid
+      parameters:
+      - name: movieid
+        in: path
+        description: Movie ID.
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Movie director
+          content:
+            text/html:
+              schema:
+                type: string
+                example: Ridley Scott
+        "400":
+          description: bad input parameter
   /moviesbytitle:
     get:
       tags:
