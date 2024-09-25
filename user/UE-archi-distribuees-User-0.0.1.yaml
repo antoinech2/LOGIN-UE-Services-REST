@@ -48,15 +48,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AllBookings'
+                $ref: '#/components/schemas/BookingsUser'
 
 
 components:
   schemas:
-    AllBookings:
-      type: array
-      items:
-        $ref: '#/components/schemas/BookingsUser'
     BookingsUser:
       required:
       - dates
