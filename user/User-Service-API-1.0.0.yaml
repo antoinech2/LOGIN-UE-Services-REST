@@ -5,7 +5,7 @@ info:
   contact:
     name: Jean-Baptiste Lambertin
     email: jean-baptiste.lambertin@imt-atlantique.fr
-  version: 0.0.1
+  version: 1.0.0
 tags:
   - name: Admin
     description: Endpoints restricted to admin-only operations.
