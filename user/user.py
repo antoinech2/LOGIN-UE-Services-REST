@@ -56,8 +56,35 @@ def get_available_bookings():
 
    return make_response(jsonify(movies_name), 200)
 
+@app.route("/movie-info", methods=['GET'])
+def get_movie_info():
+   if not "title" in request.args or not request.args["title"]:
+      return make_response(jsonify({"error":"No title provided"}), 400)
+
+   title = request.args["title"]
+
+   # ask movie service for the movie info
+   movie_request = requests.get(f"http://127.0.0.1:3200/moviesbytitle?title={title}")
+
+   # check if there is an error using the response code
+   if not movie_request.ok:
+      if movie_request.status_code == 404:
+         return make_response(jsonify({"error":"No movie found"}), 404)
+      return make_response(jsonify({"error":"Error in movie service"}), 500)
+   
+   # We provide info to end-users (not the interal movie id)
+   movie = movie_request.json()
+   result = {
+      "title": movie["title"],
+      "director": movie["director"],
+      "rating": movie["rating"]
+   }
+
+   return make_response(jsonify(result), 200)
+
+
 @app.route("/create_booking/<userid>", methods=['POST'])
-def  create_booking_by_userid (userid):
+def create_booking_by_userid(userid):
    req = request.get_json()
 
    #Post request to booking service
@@ -68,7 +95,7 @@ def  create_booking_by_userid (userid):
       return make_response(jsonify({"error":"Bad request"}), 400)
 
 @app.route("/bookings/<userid>", methods=['GET'])
-def get_bookings_by_userid (userid):
+def get_bookings_by_userid(userid):
    service = requests.get(f"http://127.0.0.1:3201/bookings/{userid}")
    if service.ok:
       return make_response(jsonify(service.json()), 200)

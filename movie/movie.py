@@ -116,7 +116,7 @@ def del_movie(movieid):
             write_movies(movies)
             return make_response(jsonify(movie),200)
 
-    res = make_response(jsonify({"error":"movie ID not found"}),400)
+    res = make_response(jsonify({"error":"movie ID not found"}),404)
     return res
 
 # Help message
