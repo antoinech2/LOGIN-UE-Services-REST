@@ -35,7 +35,7 @@ paths:
         - Admin
       summary: Get All Users
       description: Retrieves a list of all registered users.
-      operationId: getAllUsers
+      operationId: get_users
       responses:
         "200":
           description: List of all users.
@@ -52,14 +52,14 @@ paths:
         - User
       summary: Get User by ID
       description: Retrieves a specific user by user ID.
-      operationId: getUserById
+      operationId: get_user_by_userid
       parameters:
         - name: userId
           in: path
           required: true
           description: The ID of the user.
           schema:
-            type: string
+            $ref: '#/components/schemas/UserId'
       responses:
         "200":
           description: User found.
@@ -84,14 +84,14 @@ paths:
         - User
       summary: Create a Booking for User
       description: Creates a new booking for a specified user by user ID.
-      operationId: createBookingForUser
+      operationId: create_booking_by_userid
       parameters:
         - name: userId
           in: path
           required: true
           description: The ID of the user.
           schema:
-            type: string
+            $ref: "#/components/schemas/UserId"
       requestBody:
         required: true
         content:
@@ -112,15 +112,14 @@ paths:
         - User
       summary: Get User Bookings
       description: Retrieves the booking details for a specific user by user ID.
-      operationId: getUserBookings
+      operationId: get_bookings_by_userid
       parameters:
         - name: userId
           in: path
           required: true
           description: The ID of the user.
           schema:
-            type: integer
-            format: int64
+            $ref: '#/components/schemas/UserId'
       responses:
         "200":
           description: List of bookings for the user.
@@ -129,28 +128,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserBookings'
                 
-  /available-bookings/{userId}:
+  /available-bookings:
     post:
       tags:
         - User
       summary: Get Available Bookings for a Date
       description: Retrieves available booking options for a user on a specified date.
-      operationId: getAvailableBookingsByDate
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          description: The ID of the user.
-          schema:
-            type: string
-
+      operationId: get_available_bookings()
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: string
-              example: "1360031010"
+              $ref: '#/components/schemas/Date'
       responses:
         "200":
           description: List of available bookings for the user on the given date.
@@ -165,7 +155,7 @@ paths:
         - User
       summary: Get Movie Information
       description: Retrieves information about all movies (excluding movie IDs).
-      operationId: getMovieInformation
+      operationId: get_movie_info
       responses:
         "200":
           description: List of movie information.
