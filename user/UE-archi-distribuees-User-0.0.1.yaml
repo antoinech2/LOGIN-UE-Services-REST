@@ -78,7 +78,7 @@ paths:
                     type: string
                     example: {"error":"User not found"}
 
-  /create-booking/{userId}:
+  /create_booking/{userId}:
     post:
       tags:
         - User
@@ -168,7 +168,7 @@ paths:
                     type: string
                     example: {"error":"Internal server error"}
                 
-  /available-bookings:
+  /available_bookings:
     post:
       tags:
         - User
@@ -219,7 +219,7 @@ paths:
                     type: string
                     example: {"error":"Internal server error"}
                 
-  /movie-info:
+  /movie_info:
     get:
       tags:
         - User

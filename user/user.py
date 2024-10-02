@@ -56,7 +56,7 @@ def get_available_bookings():
 
    return make_response(jsonify(movies_name), 200)
 
-@app.route("/movie-info", methods=['GET'])
+@app.route("/movie_info", methods=['GET'])
 def get_movie_info():
    if not "title" in request.args or not request.args["title"]:
       return make_response(jsonify({"error":"No title provided"}), 400)
