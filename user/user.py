@@ -92,7 +92,9 @@ def create_booking_by_userid(userid):
    if service.ok:
       return make_response(jsonify(service.json()), 200)
    else:
-      return make_response(jsonify({"error":"Bad request"}), 400)
+      if service.status_code == 400: #return error message from booking service
+         return make_response(jsonify(service.json()), 400)
+      return make_response(jsonify({"error":"Error in booking service"}), 500)
 
 @app.route("/bookings/<userid>", methods=['GET'])
 def get_bookings_by_userid(userid):
