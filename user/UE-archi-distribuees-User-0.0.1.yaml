@@ -53,6 +53,15 @@ paths:
 
 components:
   schemas:
+    MoviesUser:
+      required:
+      - movies
+      type: object
+      properties:
+        movies:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewMovie'
     BookingsUser:
       required:
       - dates
