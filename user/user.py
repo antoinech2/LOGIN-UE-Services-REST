@@ -45,6 +45,26 @@ def get_available_bookings():
 
    return make_response(jsonify(movies_name), 200)
 
+@app.route("/create_booking/<userid>", methods=['POST'])
+def  create_booking_by_userid (userid):
+   req = request.get_json()
+
+   #Post request to booking service
+   service = requests.post(f"http://127.0.0.1:3201//bookings/{userid}",json = req)
+   if service.ok:
+      return make_response(jsonify(service.json()), 200)
+   else:
+      return make_response(jsonify({"error":"Bad request"}), 400)
+
+@app.route("/bookings/<userid>", methods=['GET'])
+def get_bookings_by_userid (userid):
+   service = requests.get(f"http://127.0.0.1:3201/bookings/{userid}")
+   if service.ok:
+      return make_response(jsonify(service.json()), 200)
+   else:
+      return make_response(jsonify({"error":"Bad request"}), 400)
+
+
 if __name__ == "__main__":
    print("Server running in port %s"%(PORT))
    app.run(host=HOST, port=PORT)
