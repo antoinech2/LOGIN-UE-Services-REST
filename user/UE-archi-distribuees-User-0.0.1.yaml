@@ -27,13 +27,40 @@ paths:
               schema:
                 type: string
                 example: <h1 style='color:blue'>Welcome to the User service!</h1>
+  /create_booking/{userid}:
+    post:
+      tags:
+      - user
+      summary: create a booking for a user
+      description: By passing in the appropriate options, you can create a booking for a user
+      operationId: create_booking_by_userid
+      parameters:
+      - name: userid
+        in: path
+        required: true
+        description: The id of the user
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewMovie'
+      responses:
+        "200":
+          description: booking created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewMovie'
   /bookings/{userid}:
     get:
       tags:
       - user
       summary: get the bookings of a user
       description: By passing in the appropriate options, you can get the bookings of a user
-      operationId: get_bookings_byuserid
+      operationId: get_bookings_by_userid
       parameters:
       - name: userid
         in: path
@@ -49,6 +76,49 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BookingsUser'
+  /available_bookings/{userid}:
+    post:
+      tags:
+      - user
+      summary: get the available bookings of a date by a user
+      description: By passing in the appropriate options, you can get the available bookings of a date by a user
+      operationId: get_available_bookings_by_userid
+      parameters:
+      - name: userid
+        in: path
+        required: true
+        description: The id of the user
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Date'
+      responses:
+        "200":
+          description: list of all bookings available to the user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DateItem'
+  /movie_info:
+    get:
+      tags:
+      - user
+      summary: get the info of all movies, minus their id
+      description: By passing in the appropriate options, you can get the info of all movies, minus their id
+      operationId: get_movie_info
+      responses:
+        "200":
+          description: info of all movies
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MoviesUser'
+
+
 
 
 components:
@@ -101,3 +171,11 @@ components:
         movieid:
           type: string
           example: 276c79ec-a26a-40a6-b3d3-fb242a5947b6
+    Date:
+      required:
+      - date
+      type: object
+      properties:
+        date:
+          type: string
+          example: "20151201"
