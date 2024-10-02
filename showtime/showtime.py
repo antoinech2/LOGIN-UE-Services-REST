@@ -10,6 +10,7 @@ HOST = '0.0.0.0'
 with open('{}/databases/times.json'.format("."), "r") as jsf:
    schedule = json.load(jsf)["schedule"]
 
+# Main endpoint
 @app.route("/", methods=['GET'])
 def home():
    return "<h1 style='color:blue'>Welcome to the Showtime service!</h1>"
@@ -18,6 +19,7 @@ def home():
 def showtimes():
    return make_response(jsonify(schedule), 200)
 
+# Show available bookings for a specific date
 @app.route("/showtimes/<date>", methods=['GET'])
 def get_movies_by_date(date):
     for day in schedule:

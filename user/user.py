@@ -26,6 +26,8 @@ def get_user_by_userid(userid):
          return make_response(jsonify(user), 200)
    return make_response(jsonify({"error":"User not found"}), 404)
 
+
+# Display movies that are available for booking on a specific date
 @app.route("/available_bookings", methods=['GET'])
 def get_available_bookings():
    # check if there is a date in the request
@@ -82,7 +84,7 @@ def get_movie_info():
 
    return make_response(jsonify(result), 200)
 
-
+# Add a booking for a movie
 @app.route("/create_booking/<userid>", methods=['POST'])
 def create_booking_by_userid(userid):
    req = request.get_json()
@@ -96,6 +98,7 @@ def create_booking_by_userid(userid):
          return make_response(jsonify(service.json()), 400)
       return make_response(jsonify({"error":"Error in booking service"}), 500)
 
+# Get bookings of a user
 @app.route("/bookings/<userid>", methods=['GET'])
 def get_bookings_by_userid(userid):
    service = requests.get(f"http://127.0.0.1:3201/bookings/{userid}")
