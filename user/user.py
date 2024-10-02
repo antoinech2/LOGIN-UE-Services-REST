@@ -15,6 +15,35 @@ with open('{}/databases/users.json'.format("."), "r") as jsf:
 def home():
    return "<h1 style='color:blue'>Welcome to the User service!</h1>"
 
+@app.route("/available_bookings", methods=['GET'])
+def get_available_bookings():
+   # check if there is a date in the request
+   if not "date" in request.args or not request.args["date"]:
+      return make_response(jsonify({"error":"No date provided"}), 400)
+
+   date = request.args["date"]
+
+   # ask showtimes service a list of movies for the date
+   slots = requests.get(f"http://127.0.0.1:3202/showtimes/{date}")
+
+   # check if there is an error using the response code
+   if not slots.ok:
+      if slots.status_code == 404:
+         return make_response(jsonify({"error":"No showtimes available for this date"}), 404)
+      return make_response(jsonify({"error":"Error in showtimes service"}), 500)
+   
+   service_request = slots.json()
+   movies_id = service_request["movies"]
+
+   # get the name of the movies
+   movies_name = []
+   for movie in movies_id:
+      movie_name = requests.get(f"http://127.0.0.1:3200/movies/{movie}/title")
+      if not movie_name.ok:
+         return make_response(jsonify({"error":"Error in movies service or unknown movie"}), 500)
+      movies_name.append(movie_name.text)
+
+   return make_response(jsonify(movies_name), 200)
 
 if __name__ == "__main__":
    print("Server running in port %s"%(PORT))

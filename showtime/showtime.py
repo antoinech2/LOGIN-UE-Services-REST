@@ -23,7 +23,7 @@ def get_movies_by_date(date):
     for day in schedule:
         if day["date"] == date:
             return make_response(jsonify(day), 200)
-    return make_response(jsonify("error: no data found for given date"), 400)
+    return make_response(jsonify("error: no data found for given date"), 404)
 
 if __name__ == "__main__":
    print("Server running in port %s"%(PORT))
