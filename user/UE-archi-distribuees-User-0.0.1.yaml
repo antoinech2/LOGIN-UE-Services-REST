@@ -76,7 +76,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: User not found.
+                    example: {"error":"User not found"}
 
   /create-booking/{userId}:
     post:
@@ -105,6 +105,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Booking'
+        "400":
+          description: Invalid request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: {"error":"No date provided"}
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: {"error":"Internal server error"}
                 
   /bookings/{userId}:
     get:
@@ -127,6 +147,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserBookings'
+        "400":
+          description: User not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: {"error":"Bad request"}
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: {"error":"Internal server error"}
                 
   /available-bookings:
     post:
@@ -148,6 +188,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AvailableBooking'
+        "400":
+          description: Invalid request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: {"error":"No date provided"}
+        "404":
+          description: No available bookings found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: {"error":"No available bookings found"}
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: {"error":"Internal server error"}
                 
   /movie-info:
     get:
@@ -163,6 +233,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MovieInfo'
+        "400":
+          description: Invalid request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: {"error":"No title provided"}
+        "404":
+          description: No movie found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: {"error":"No movie found"}
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: {"error":"Internal server error"}
 
 components:
   schemas:
