@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>UE Services (REST)</title>
+    </head>
+    <body>
+        <h1>UE Services</h1>
+        <h5>Jean-Baptiste LAMBERTIN, Nathan CLAEYS, Antoine CHEUCLE</h5>
+        <h2>Help page</h2>
+        <p>There is the list of available endpoints :</p>
+        <ul>
+            <li><strong>GET /</strong> - Homescreen</li>
+            <li><strong>GET /template</strong> - HTML template example</li>
+            <li><strong>GET /json</strong> - Raw JSON Database of movies</li>
+            <li><strong>GET /movies/&lt;id&gt;</strong> - Retrieve a specific movie by ID</li>
+            <li><strong>GET /movies/&lt;id&gt;/rating</strong> - Retrieve a specific movie rating by ID</li>
+            <li><strong>GET /movies/&lt;id&gt;/title</strong> - Retrieve a specific movie title by ID</li>
+            <li><strong>GET /movies/&lt;id&gt;/director</strong> - Retrieve a specific movie director by ID</li>
+            <li><strong>GET /moviesbytitle?title=&lt;title&gt;</strong> - Retrieve a specific movie by its title</li>
+            <li><strong>POST /addmovie/&lt;id&gt;</strong> - Add a new movie in database. See documentation.</li>
+            <li><strong>PUT /movies/&lt;id&gt;/&lt;rate&gt;</strong> - Update a movie rating by ID</li>
+            <li><strong>DELETE /movies/&lt;id&gt;</strong> - Delete a movie by ID</li>
+            <li><strong>GET /help</strong> - Show this page</li>
+        </ul>
+    </body>
+</html>
