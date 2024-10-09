@@ -24,10 +24,11 @@ def get_bookings():
 # Get bookings for one user by user id
 @app.route("/bookings/<userid>", methods=['GET'])
 def get_bookings_byid(userid):
-   user_bookings = []
+   user_bookings = None
    for booking in bookings:
       if booking["userid"] == userid:
-         user_bookings.append(booking)
+         user_bookings = booking
+         break
    if user_bookings:
       return make_response(jsonify(user_bookings), 200)
    else:
