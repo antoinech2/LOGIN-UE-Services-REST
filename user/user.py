@@ -11,6 +11,12 @@ HOST = '0.0.0.0'
 with open('{}/databases/users.json'.format("."), "r") as jsf:
    users = json.load(jsf)["users"]
 
+def getUser(userid):
+   for user in users:
+      if user["id"] == userid:
+         return user
+   return None
+
 @app.route("/", methods=['GET'])
 def home():
    return "<h1 style='color:blue'>Welcome to the User service!</h1>"
@@ -21,9 +27,9 @@ def get_users():
 
 @app.route("/users/<userid>", methods=['GET'])
 def get_user_by_userid(userid):
-   for user in users:
-      if user["id"] == userid:
-         return make_response(jsonify(user), 200)
+   user = getUser(userid)
+   if user:
+      return make_response(jsonify(user), 200)
    return make_response(jsonify({"error":"User not found"}), 404)
 
 
@@ -85,17 +91,20 @@ def get_movie_info():
    return make_response(jsonify(result), 200)
 
 # Add a booking for a movie
-@app.route("/create_booking/<userid>", methods=['POST'])
+@app.route("/bookings/<userid>", methods=['POST'])
 def create_booking_by_userid(userid):
    req = request.get_json()
+   
+   if not getUser(userid):
+      return make_response(jsonify({"error":"User not found"}), 404)
 
    #Post request to booking service
-   service = requests.post(f"http://127.0.0.1:3201//bookings/{userid}",json = req)
+   service = requests.post(f"http://127.0.0.1:3201/bookings/{userid}",json = req)
    if service.ok:
       return make_response(jsonify(service.json()), 200)
    else:
-      if service.status_code == 400: #return error message from booking service
-         return make_response(jsonify(service.json()), 400)
+      if service.status_code < 500: #return error message from booking service
+         return make_response(jsonify(service.json()), service.status_code)
       return make_response(jsonify({"error":"Error in booking service"}), 500)
 
 # Get bookings of a user
@@ -105,7 +114,9 @@ def get_bookings_by_userid(userid):
    if service.ok:
       return make_response(jsonify(service.json()), 200)
    else:
-      return make_response(jsonify({"error":"Bad request"}), 400)
+      if service.status_code == 404:
+         return make_response(jsonify(service.json()), 404)
+      return make_response(jsonify({"error":"Error in booking service"}), 500)
 
 
 if __name__ == "__main__":

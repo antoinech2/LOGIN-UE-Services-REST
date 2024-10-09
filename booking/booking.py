@@ -27,12 +27,8 @@ def get_bookings_byid(userid):
    user_bookings = None
    for booking in bookings:
       if booking["userid"] == userid:
-         user_bookings = booking
-         break
-   if user_bookings:
-      return make_response(jsonify(user_bookings), 200)
-   else:
-      return make_response(jsonify({"error":"No bookings for this user"}), 404)
+         return make_response(jsonify(booking["dates"]), 200)
+   return make_response(jsonify({"error":"No bookings for this user"}), 404)
 
 # Add a booking for a user by user id, using the service showtimes to check the validity of the booking   
 @app.route("/bookings/<userid>", methods=['POST'])
