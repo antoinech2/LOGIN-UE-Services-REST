@@ -101,8 +101,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MovieItem'
-        "400":
-          description: bad input parameter
+        "404":
+          description: Movie does not exist.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Movie ID not found
     post:
       tags:
       - admins
@@ -126,13 +134,25 @@ paths:
               $ref: '#/components/schemas/MovieItem'
       responses:
         "200":
-          description: Movie created
+          description: Movie does not exist.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MovieItem'
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: movie added
         "409":
-          description: an existing item already exists
+          description: Movie already exists.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: movie ID already exists
     delete:
       tags:
       - admins
@@ -150,9 +170,21 @@ paths:
           type: string
       responses:
         "200":
-          description: item deleted
-        "400":
-          description: ID not found
+          description: Movie deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieItem'
+        "404":
+          description: Movie does not exist.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: movie ID not found
   /movies/{movieid}/rating:
     get:
       tags:
@@ -175,8 +207,16 @@ paths:
               schema:
                 type: number
                 example: 3.4
-        "400":
-          description: bad input parameter
+        "404":
+          description: Movie does not exist.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Movie ID not found
   /movies/{movieid}/title:
     get:
       tags:
@@ -199,8 +239,16 @@ paths:
               schema:
                 type: string
                 example: The Martian
-        "400":
-          description: bad input parameter
+        "404":
+          description: Movie does not exist.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Movie ID not found
   /movies/{movieid}/director:
     get:
       tags:
@@ -223,8 +271,16 @@ paths:
               schema:
                 type: string
                 example: Ridley Scott
-        "400":
-          description: bad input parameter
+        "404":
+          description: Movie does not exist.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Movie ID not found
   /moviesbytitle:
     get:
       tags:
@@ -249,8 +305,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MovieItem'
-        "400":
-          description: bad input parameter
+        "404":
+          description: Movie does not exist.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: movie title not found
   /movies/{movieid}/{rate}:
     put:
       tags:
@@ -279,9 +343,21 @@ paths:
           type: integer
       responses:
         "200":
-          description: rate updated
-        "400":
-          description: movie ID not found
+          description: Movie rate updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieItem'
+        "404":
+          description: Movie does not exist.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Movie ID not found
 components:
   schemas:
     AllMovies:

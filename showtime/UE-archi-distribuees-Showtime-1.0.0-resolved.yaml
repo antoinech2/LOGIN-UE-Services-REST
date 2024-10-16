@@ -41,7 +41,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AllSchedule'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Schedule'
   /showmovies/{date}:
     get:
       tags:
@@ -64,19 +66,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Schedule'
-        "400":
-          description: bad input parameter
+        "404":
+          description: Do data for this date
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: no data found for given date
 components:
   schemas:
-    AllSchedule:
-      required:
-      - schedule
-      type: object
-      properties:
-        schedule:
-          type: array
-          items:
-            $ref: '#/components/schemas/Schedule'
     Schedule:
       required:
       - date

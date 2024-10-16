@@ -68,7 +68,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BookingsUser'
+                type: array
+                items:
+                  $ref: '#/components/schemas/DateItem'
         "400":
           description: bad input parameter
     post:
@@ -98,9 +100,51 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BookingsUser'
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Booking added
+        "400":
+          description: Invalid request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Missing date or movieid
+        "404":
+          description: No booking available.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Movie not available for the selected date
         "409":
-          description: an existing item already exists
+          description: Movie already booked for this user.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Booking already exists for this user
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Internal server error
 components:
   schemas:
     AllBookings:

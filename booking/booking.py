@@ -91,7 +91,7 @@ def add_booking(userid):
    return res
 
 def write(bookings):
-    with open('{}/databases/bookings.json'.format("."), 'w') as f:
+    with open('{}/databases/bookings.json'.format(dirname), 'w') as f:
         json.dump({"bookings": bookings}, f, indent=4)
 
 

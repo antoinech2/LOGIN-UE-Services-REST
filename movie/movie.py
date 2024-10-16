@@ -67,7 +67,7 @@ def get_movie_director(movieid):
     if movie:
         return make_response(movie["director"],200)
     else:
-        return make_response(jsonify({"error":"Movie ID not found"}),400)
+        return make_response(jsonify({"error":"Movie ID not found"}),404)
 
 # Get movie by title
 @app.route("/moviesbytitle", methods=['GET'])
@@ -79,7 +79,7 @@ def get_movie_bytitle():
             if str(movie["title"]) == str(req["title"]):
                 json = movie
     if not json:
-        res = make_response(jsonify({"error":"movie title not found"}),400)
+        res = make_response(jsonify({"error":"movie title not found"}),404)
     else:
         res = make_response(jsonify(json),200)
     return res
@@ -107,7 +107,7 @@ def update_movie_rating(movieid, rate):
             write_movies(movies)
             res = make_response(jsonify(movie),200)
             return res
-    res = make_response(jsonify({"error":"movie ID not found"}),201)
+    res = make_response(jsonify({"error":"movie ID not found"}),404)
     return res
 
 # Delete movie

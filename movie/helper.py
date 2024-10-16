@@ -1,5 +1,7 @@
 import json
+import os
 
+dirname = os.path.dirname(__file__)
 
 def get_movie(movies, movieid):
     for movie in movies:
@@ -8,5 +10,5 @@ def get_movie(movies, movieid):
     return None
 
 def write_movies(movies):
-    with open('{}/databases/movies.json'.format("."), 'w') as f:
+    with open('{}/databases/movies.json'.format(dirname), 'w') as f:
         json.dump({"movies": movies}, f, indent=4)
