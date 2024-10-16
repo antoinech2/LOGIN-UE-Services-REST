@@ -2,13 +2,16 @@ from flask import Flask, render_template, request, jsonify, make_response
 import requests
 import json
 from werkzeug.exceptions import NotFound
+import os
 
 app = Flask(__name__)
 
 PORT = 3203
 HOST = '0.0.0.0'
 
-with open('{}/databases/users.json'.format("."), "r") as jsf:
+dirname = os.path.dirname(__file__)
+
+with open('{}/databases/users.json'.format(dirname), "r") as jsf:
    users = json.load(jsf)["users"]
 
 def getUser(userid):

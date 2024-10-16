@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify, make_response
 import json
 import sys
 from werkzeug.exceptions import NotFound
+import os
 
 from helper import get_movie, write_movies
 
@@ -10,8 +11,10 @@ app = Flask(__name__)
 PORT = 3200
 HOST = '0.0.0.0'
 
+dirname = os.path.dirname(__file__)
+
 # JSON file containing database
-with open('{}/databases/movies.json'.format("."), 'r') as jsf:
+with open('{}/databases/movies.json'.format(dirname), 'r') as jsf:
    movies = json.load(jsf)["movies"]
 
 # Root endpoint

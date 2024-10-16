@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify, make_response
 import requests
 import json
+import os
 from werkzeug.exceptions import NotFound
 
 app = Flask(__name__)
@@ -8,7 +9,9 @@ app = Flask(__name__)
 PORT = 3201
 HOST = '0.0.0.0'
 
-with open('{}/databases/bookings.json'.format("."), "r") as jsf:
+dirname = os.path.dirname(__file__)
+
+with open('{}/databases/bookings.json'.format(dirname), "r") as jsf:
    bookings = json.load(jsf)["bookings"]
 
 @app.route("/", methods=['GET'])

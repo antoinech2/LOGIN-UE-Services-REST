@@ -1,13 +1,16 @@
 from flask import Flask, render_template, request, jsonify, make_response
 import json
 from werkzeug.exceptions import NotFound
+import os
 
 app = Flask(__name__)
 
 PORT = 3202
 HOST = '0.0.0.0'
 
-with open('{}/databases/times.json'.format("."), "r") as jsf:
+dirname = os.path.dirname(__file__)
+
+with open('{}/databases/times.json'.format(dirname), "r") as jsf:
    schedule = json.load(jsf)["schedule"]
 
 # Main endpoint
